@@ -11,6 +11,17 @@
 		9565CC8227A401AB004C4547 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9565CC8127A401AB004C4547 /* ContentView.swift */; };
 		9565CC8427A401AB004C4547 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9565CC8327A401AB004C4547 /* Assets.xcassets */; };
 		9565CC8727A401AB004C4547 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9565CC8627A401AB004C4547 /* Preview Assets.xcassets */; };
+		9565CC8F27A42054004C4547 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 9565CC8E27A42054004C4547 /* Realm */; };
+		9565CC9127A42054004C4547 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9565CC9027A42054004C4547 /* RealmSwift */; };
+		9565CC9427A421F0004C4547 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9565CC9327A421F0004C4547 /* Animation.swift */; };
+		9565CC9627A4222E004C4547 /* MoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9565CC9527A4222E004C4547 /* MoodView.swift */; };
+		9565CC9827A422A7004C4547 /* GeneralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9565CC9727A422A7004C4547 /* GeneralView.swift */; };
+		9565CC9A27A424AE004C4547 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9565CC9927A424AE004C4547 /* DataController.swift */; };
+		9565CC9E27A4268B004C4547 /* BottomNavigationButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9565CC9D27A4268B004C4547 /* BottomNavigationButtons.swift */; };
+		9565CCA027A4270D004C4547 /* NoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9565CC9F27A4270D004C4547 /* NoticeView.swift */; };
+		9565CCA227A4271B004C4547 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9565CCA127A4271B004C4547 /* CalendarView.swift */; };
+		9565CCA427A42729004C4547 /* StatisticView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9565CCA327A42729004C4547 /* StatisticView.swift */; };
+		9565CCA627A43737004C4547 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9565CCA527A43737004C4547 /* Task.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +30,15 @@
 		9565CC8127A401AB004C4547 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		9565CC8327A401AB004C4547 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9565CC8627A401AB004C4547 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		9565CC9327A421F0004C4547 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
+		9565CC9527A4222E004C4547 /* MoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodView.swift; sourceTree = "<group>"; };
+		9565CC9727A422A7004C4547 /* GeneralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralView.swift; sourceTree = "<group>"; };
+		9565CC9927A424AE004C4547 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		9565CC9D27A4268B004C4547 /* BottomNavigationButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNavigationButtons.swift; sourceTree = "<group>"; };
+		9565CC9F27A4270D004C4547 /* NoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeView.swift; sourceTree = "<group>"; };
+		9565CCA127A4271B004C4547 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		9565CCA327A42729004C4547 /* StatisticView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticView.swift; sourceTree = "<group>"; };
+		9565CCA527A43737004C4547 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,6 +46,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9565CC9127A42054004C4547 /* RealmSwift in Frameworks */,
+				9565CC8F27A42054004C4547 /* Realm in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -35,6 +57,7 @@
 		9565CC7327A401AA004C4547 = {
 			isa = PBXGroup;
 			children = (
+				9565CC9227A421D5004C4547 /* View */,
 				9565CC7E27A401AB004C4547 /* MoodProject */,
 				9565CC7D27A401AA004C4547 /* Products */,
 			);
@@ -53,6 +76,8 @@
 			children = (
 				9565CC7F27A401AB004C4547 /* MoodProjectApp.swift */,
 				9565CC8127A401AB004C4547 /* ContentView.swift */,
+				9565CC9927A424AE004C4547 /* DataController.swift */,
+				9565CCA527A43737004C4547 /* Task.swift */,
 				9565CC8327A401AB004C4547 /* Assets.xcassets */,
 				9565CC8527A401AB004C4547 /* Preview Content */,
 			);
@@ -65,6 +90,20 @@
 				9565CC8627A401AB004C4547 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		9565CC9227A421D5004C4547 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9565CC9327A421F0004C4547 /* Animation.swift */,
+				9565CC9727A422A7004C4547 /* GeneralView.swift */,
+				9565CC9527A4222E004C4547 /* MoodView.swift */,
+				9565CC9F27A4270D004C4547 /* NoticeView.swift */,
+				9565CCA127A4271B004C4547 /* CalendarView.swift */,
+				9565CCA327A42729004C4547 /* StatisticView.swift */,
+				9565CC9D27A4268B004C4547 /* BottomNavigationButtons.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +122,10 @@
 			dependencies = (
 			);
 			name = MoodProject;
+			packageProductDependencies = (
+				9565CC8E27A42054004C4547 /* Realm */,
+				9565CC9027A42054004C4547 /* RealmSwift */,
+			);
 			productName = MoodProject;
 			productReference = 9565CC7C27A401AA004C4547 /* MoodProject.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +154,9 @@
 				Base,
 			);
 			mainGroup = 9565CC7327A401AA004C4547;
+			packageReferences = (
+				9565CC8D27A42054004C4547 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
+			);
 			productRefGroup = 9565CC7D27A401AA004C4547 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -137,8 +183,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9565CCA027A4270D004C4547 /* NoticeView.swift in Sources */,
+				9565CCA427A42729004C4547 /* StatisticView.swift in Sources */,
 				9565CC8227A401AB004C4547 /* ContentView.swift in Sources */,
+				9565CC9A27A424AE004C4547 /* DataController.swift in Sources */,
+				9565CCA627A43737004C4547 /* Task.swift in Sources */,
+				9565CC9427A421F0004C4547 /* Animation.swift in Sources */,
+				9565CC9E27A4268B004C4547 /* BottomNavigationButtons.swift in Sources */,
+				9565CCA227A4271B004C4547 /* CalendarView.swift in Sources */,
 				9565CC8027A401AB004C4547 /* MoodProjectApp.swift in Sources */,
+				9565CC9827A422A7004C4547 /* GeneralView.swift in Sources */,
+				9565CC9627A4222E004C4547 /* MoodView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +324,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MoodProject/Preview Content\"";
+				DEVELOPMENT_TEAM = 35HYMY8DM4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -297,6 +353,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MoodProject/Preview Content\"";
+				DEVELOPMENT_TEAM = 35HYMY8DM4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -339,6 +396,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9565CC8D27A42054004C4547 /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-cocoa";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.10.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9565CC8E27A42054004C4547 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9565CC8D27A42054004C4547 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = Realm;
+		};
+		9565CC9027A42054004C4547 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9565CC8D27A42054004C4547 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = RealmSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9565CC7427A401AA004C4547 /* Project object */;
 }

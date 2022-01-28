@@ -8,9 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var dataController = DataController()
+    @State private var displayMode: GeneralDisplayMode = .mood
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        ZStack (alignment: .bottom) {
+            GeneralView(displayMode: $displayMode).environmentObject(dataController)
+            BottomNavigationButtons(displayMode: $displayMode).environmentObject(dataController)
+            
+        }
     }
 }
 
