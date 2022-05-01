@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		953090E3281EAEDE009758B3 /* TopNavigationButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953090E2281EAEDE009758B3 /* TopNavigationButtons.swift */; };
+		953090E5281EB6DE009758B3 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953090E4281EB6DE009758B3 /* MenuView.swift */; };
 		9565CC8027A401AB004C4547 /* MoodProjectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9565CC7F27A401AB004C4547 /* MoodProjectApp.swift */; };
 		9565CC8227A401AB004C4547 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9565CC8127A401AB004C4547 /* ContentView.swift */; };
 		9565CC8427A401AB004C4547 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9565CC8327A401AB004C4547 /* Assets.xcassets */; };
@@ -25,6 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		953090E2281EAEDE009758B3 /* TopNavigationButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavigationButtons.swift; sourceTree = "<group>"; };
+		953090E4281EB6DE009758B3 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		9565CC7C27A401AA004C4547 /* MoodProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoodProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9565CC7F27A401AB004C4547 /* MoodProjectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodProjectApp.swift; sourceTree = "<group>"; };
 		9565CC8127A401AB004C4547 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -101,6 +105,8 @@
 				9565CC9F27A4270D004C4547 /* NoticeView.swift */,
 				9565CCA127A4271B004C4547 /* CalendarView.swift */,
 				9565CCA327A42729004C4547 /* StatisticView.swift */,
+				953090E2281EAEDE009758B3 /* TopNavigationButtons.swift */,
+				953090E4281EB6DE009758B3 /* MenuView.swift */,
 				9565CC9D27A4268B004C4547 /* BottomNavigationButtons.swift */,
 			);
 			path = View;
@@ -184,11 +190,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				9565CCA027A4270D004C4547 /* NoticeView.swift in Sources */,
+				953090E3281EAEDE009758B3 /* TopNavigationButtons.swift in Sources */,
 				9565CCA427A42729004C4547 /* StatisticView.swift in Sources */,
 				9565CC8227A401AB004C4547 /* ContentView.swift in Sources */,
 				9565CC9A27A424AE004C4547 /* DataController.swift in Sources */,
 				9565CCA627A43737004C4547 /* Task.swift in Sources */,
 				9565CC9427A421F0004C4547 /* Animation.swift in Sources */,
+				953090E5281EB6DE009758B3 /* MenuView.swift in Sources */,
 				9565CC9E27A4268B004C4547 /* BottomNavigationButtons.swift in Sources */,
 				9565CCA227A4271B004C4547 /* CalendarView.swift in Sources */,
 				9565CC8027A401AB004C4547 /* MoodProjectApp.swift in Sources */,

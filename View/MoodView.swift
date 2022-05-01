@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MoodView: View {
     @Binding var displayMode: GeneralDisplayMode
+    @Binding var colorScheme: ColorScheme
     @State var amount: CGFloat = 0.0
     @State var score: Int = 0
     var intProxy: Binding<Double>{
@@ -24,25 +25,26 @@ struct MoodView: View {
     
     var body: some View {
         ZStack {
-            displayMode.colorBackground
+            LinearGradient(gradient: Gradient(colors: [.white, colorScheme.color]), startPoint: .top, endPoint: .bottom)
+           
             .ignoresSafeArea()
         VStack {
         Text("Mood")
                 .font(.system(size: 20.0, weight: .regular))
-                .foregroundColor(.white)
+                .foregroundColor(.black)
                 .padding([.top, .bottom], 30)
             Text ("What's your mood right now?")
                 .font(.system(size: 16.0, weight: .medium))
-                .foregroundColor(.white)
+                .foregroundColor(.black)
             VStack{
-                AgeSlider(value: $amount , range: 1.0...5.0)
+                MoodSlider(value: $amount , range: 1.0...5.0)
             }
         }
         }
     }
 }
 
-struct AgeSlider: View {
+struct MoodSlider: View {
     
     @Binding var value: CGFloat
     @State var lastOffset: CGFloat = 0
@@ -213,6 +215,6 @@ struct TickMarkView: View {
 }
 struct MoodView_Previews: PreviewProvider {
     static var previews: some View {
-        MoodView(displayMode: .constant(.mood), amount: 0)
+        MoodView(displayMode: .constant(.mood), colorScheme: .constant(.blue), amount: 0)
     }
 }

@@ -7,6 +7,40 @@
 
 import SwiftUI
 
+enum ColorScheme {
+    case blue
+    case green
+    case red
+    case purple
+   
+    var colorName: String {
+        switch self {
+        case .blue:
+            return "blue"
+        case .green:
+            return "green"
+        case .red:
+            return "red"
+        case .purple:
+            return "purple"
+        }
+    }
+    
+    var color: Color {
+        switch self {
+        case .blue:
+            return .blue
+        case .green:
+            return .green
+        case .red:
+            return .red
+        case .purple:
+            return .purple
+        }
+    }
+    
+    }
+
 enum GeneralDisplayMode {
     case mood
     case notation
@@ -26,10 +60,6 @@ enum GeneralDisplayMode {
             return "Grid"
         }
     }
-    
-    
-    
-    
     var colorBackground: Color {
         switch self {
         case .mood:
@@ -49,13 +79,13 @@ enum GeneralDisplayMode {
 struct GeneralView: View {
     @EnvironmentObject var dataController: DataController
     @Binding var displayMode: GeneralDisplayMode
-    @State var currentItemIsFavorite: Bool = false
+    @Binding var colorScheme: ColorScheme
 
     var body: some View {
         ZStack {
             switch displayMode {
             case .mood:
-                MoodView(displayMode: $displayMode).environmentObject(dataController)
+                MoodView(displayMode: $displayMode, colorScheme: $colorScheme).environmentObject(dataController)
                     .transition(.circular)
             case .notation:
                 NoticeView(displayMode: $displayMode).environmentObject(dataController)
