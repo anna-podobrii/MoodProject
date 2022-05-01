@@ -25,9 +25,9 @@ struct BottomNavigationButtons: View {
             
             }
             .font(.system(size: 18.0, weight: .regular))
-                .foregroundColor(.white)
+                .foregroundColor(.black)
         })
-            
+            Spacer()
             Button(action: {
                 withAnimation(){
                     displayMode = .notation
@@ -40,9 +40,9 @@ struct BottomNavigationButtons: View {
                 
                 }
                 .font(.system(size: 18.0, weight: .regular))
-                    .foregroundColor(.white)
+                    .foregroundColor(.black)
             })
-            
+            Spacer()
             Button(action: {
                 withAnimation(){
                     displayMode = .calendar
@@ -55,9 +55,9 @@ struct BottomNavigationButtons: View {
                 
                 }
                 .font(.system(size: 18.0, weight: .regular))
-                    .foregroundColor(.white)
+                    .foregroundColor(.black)
             })
-            
+            Spacer()
             Button(action: {
                 withAnimation(){
                     displayMode = .statistic
@@ -70,9 +70,11 @@ struct BottomNavigationButtons: View {
                 
                 }
                 .font(.system(size: 18.0, weight: .regular))
-                    .foregroundColor(.white)
+                    .foregroundColor(.black)
             })
     }
+        .padding()
+        .background(.white)
     }
 }
 

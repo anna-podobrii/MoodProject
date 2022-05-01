@@ -9,6 +9,18 @@ import SwiftUI
 
 struct MoodView: View {
     @Binding var displayMode: GeneralDisplayMode
+    @State var amount: CGFloat = 0.0
+    @State var score: Int = 0
+    var intProxy: Binding<Double>{
+        Binding<Double>(get: {
+            //returns the score as a Double
+            return Double(score)
+        }, set: {
+            //rounds the double to an Int
+            print($0.description)
+            score = Int($0)
+        })
+    }
     
     var body: some View {
         ZStack {
@@ -18,15 +30,189 @@ struct MoodView: View {
         Text("Mood")
                 .font(.system(size: 20.0, weight: .regular))
                 .foregroundColor(.white)
-                .padding(.top, 30)
-            Spacer()
+                .padding([.top, .bottom], 30)
+            Text ("What's your mood right now?")
+                .font(.system(size: 16.0, weight: .medium))
+                .foregroundColor(.white)
+            VStack{
+                AgeSlider(value: $amount , range: 1.0...5.0)
+            }
         }
         }
     }
 }
 
+struct AgeSlider: View {
+    
+    @Binding var value: CGFloat
+    @State var lastOffset: CGFloat = 0
+    var range: ClosedRange<CGFloat>
+    var leadingOffset: CGFloat = 0
+    var trailingOffset: CGFloat = 0
+    
+    var knobSize: CGSize = CGSize(width: 20, height: 0)
+
+    var body: some View {
+        
+        GeometryReader { geometry in
+            VStack {
+            ZStack {
+                RoundedRectangle(cornerRadius: 30)
+                    .frame(width: 320, height: 15)
+                    .foregroundColor(.white)
+                    .offset(x:0)
+                HStack {
+                    TickMarkView(mood: "Very bad")
+                    TickMarkView(mood: "Bad")
+                    TickMarkView(mood: "OK")
+                    TickMarkView(mood: "Good")
+                    TickMarkView(mood: "Very good")
+ 
+                }
+                .frame(width: 290)
+                .offset(x:0, y:10)
+                HStack {
+                    ZStack {
+                        if value <= 1.5 {
+                        Image ("first_mood")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 40)
+                            .shadow(radius: 4)
+                        }
+                        if value > 1.5 && value <= 2.5 {
+                            Image ("second_mood")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 40)
+                                .shadow(radius: 4)
+                            }
+                        if value > 2.5 && value <= 3.5 {
+                            Image ("third_mood")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 40)
+                                .shadow(radius: 4)
+                            }
+                        if value > 3.5 && value <= 4.5 {
+                            Image ("fourth_mood")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 40)
+                                .shadow(radius: 4)
+                            }
+                        if value > 4.5 {
+                            Image ("fifth_mood")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 40)
+                                .shadow(radius: 4)
+                        }
+                    }
+                    .frame(width: self.knobSize.width, height: self.knobSize.height)
+                    .offset(x: self.$value.wrappedValue.map (from: self.range,  to: self.leadingOffset...(geometry.size.width - self.knobSize.width - self.trailingOffset)), y:-35)
+                    
+                    
+                    .gesture(
+                        DragGesture(minimumDistance: 0)
+                            .onChanged { value in
+                                if abs(value.translation.width) < 1 {
+                                    self.lastOffset = self.$value.wrappedValue.map(from: self.range, to: self.leadingOffset...(geometry.size.width - self.knobSize.width - self.trailingOffset))
+                                    
+                                }
+                                
+                                let sliderPos = max(1 + self.leadingOffset, min(self.lastOffset + value.translation.width, geometry.size.width - self.knobSize.width - self.trailingOffset))
+                                let sliderVal = sliderPos.map(from: self.leadingOffset...(geometry.size.width - self.knobSize.width - self.trailingOffset), to: self.range)
+                                
+                                
+                                self.value = sliderVal
+                            }
+                        
+                    )
+                    Spacer()
+                }
+                
+            }
+                  
+     
+            HStack (alignment: .center){
+                Text ("Your mood rating is ")
+                    .font(.system(size: 14.0, weight: .medium))
+                    .foregroundColor(.white)
+                
+                Text ( "\(round(value), specifier: "%.0f")")
+                    .font(.system(size: 18.0, weight: .medium))
+                    .foregroundColor(value < 2.5 ? Color.red : Color.blue)
+                    .frame(width: 30)
+                    
+                    .background(RoundedRectangle(cornerRadius: 5.0)
+                                    .foregroundColor(.white)
+                       )
+                Text ( "now")
+                    .font(.system(size: 14.0, weight: .medium))
+                    .foregroundColor(.white)
+            }
+            
+            .offset(y:30)
+            
+        }
+            
+        }
+        .frame(width: 300)
+        .padding(.top, 50)
+        .padding(30)
+    }
+}
+extension CGFloat {
+    func map(from: ClosedRange<CGFloat>, to: ClosedRange<CGFloat>) -> CGFloat {
+        
+        let value = self.clamped(to: from)
+        
+        let fromRange = from.upperBound - from.lowerBound
+        let toRange = to.upperBound - to.lowerBound
+        let result = (((value - from.lowerBound) / fromRange) * toRange) + to.lowerBound
+        return result
+    }
+}
+extension Comparable {
+    func clamped(to r: ClosedRange<Self>) -> Self {
+        let min = r.lowerBound, max = r.upperBound
+        return self < min ? min : (max < self ? max : self)
+    }
+}
+struct PinCircleView: View {
+    let position: Int
+    @Binding var pin: [Int]
+    
+    var body: some View {
+        Circle ()
+            .frame(width: 8)
+            .foregroundColor(position < self.pin.count ? .white: .gray)
+            .padding(3)
+            .background(Circle()
+                            .stroke(Color.white, lineWidth: 1.5))
+    }
+}
+struct TickMarkView: View {
+    let mood: String
+
+    
+    var body: some View {
+        VStack {
+            
+            RoundedRectangle(cornerRadius: 1)
+                .frame(width:1, height: 10)
+                .foregroundColor(.black)
+            Text (mood)
+                .font(.system(size: 12.0, weight: .regular))
+                .foregroundColor(.black)
+        }
+        .padding(.top, mood.count == 0 ? 7 : 0)
+        .frame(width: 60)
+    }
+}
 struct MoodView_Previews: PreviewProvider {
     static var previews: some View {
-        MoodView(displayMode: .constant(.mood))
+        MoodView(displayMode: .constant(.mood), amount: 0)
     }
 }

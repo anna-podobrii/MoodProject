@@ -56,16 +56,16 @@ struct GeneralView: View {
             switch displayMode {
             case .mood:
                 MoodView(displayMode: $displayMode).environmentObject(dataController)
-                    .transition(AnyTransition.circular.animation(.easeInOut(duration: 0.5)))
+                    .transition(.circular)
             case .notation:
                 NoticeView(displayMode: $displayMode).environmentObject(dataController)
-                    .transition(AnyTransition.circular.animation(.easeInOut(duration: 0.5)))
+                    .transition(.circular)
             case .calendar:
                 CalendarView(displayMode: $displayMode).environmentObject(dataController)
-                    .transition(AnyTransition.circular.animation(.easeInOut(duration: 0.5)))
+                    .transition(.circular)
             case .statistic:
                 StatisticView(displayMode: $displayMode).environmentObject(dataController)
-                    .transition(AnyTransition.circular.animation(.easeInOut(duration: 0.5)))
+                    .transition(.circular)
             }
         }
         .background(displayMode.colorBackground)
