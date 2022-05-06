@@ -8,10 +8,15 @@
 import SwiftUI
 
 struct MoodView: View {
+    @EnvironmentObject var dataControler: DataController
     @Binding var displayMode: GeneralDisplayMode
     @Binding var colorScheme: ColorScheme
+    @State var date: Date? = nil
+    @State var factor: String = ""
     @State var amount: CGFloat = 0.0
     @State var score: Int = 0
+    @State var describeMood: String = ""
+    
     var intProxy: Binding<Double>{
         Binding<Double>(get: {
             //returns the score as a Double
@@ -26,7 +31,6 @@ struct MoodView: View {
     var body: some View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [.white, colorScheme.color]), startPoint: .top, endPoint: .bottom)
-           
             .ignoresSafeArea()
         VStack {
         Text("Mood")
@@ -38,11 +42,85 @@ struct MoodView: View {
                 .foregroundColor(.black)
             VStack{
                 MoodSlider(value: $amount , range: 1.0...5.0)
+                Text ("What influenced your mood?")
+                    .font(.system(size: 16.0, weight: .medium))
+                    .foregroundColor(.black)
             }
+            HStack {
+            VStack {
+               
+            Circle()
+                .foregroundColor(.purple)
+                Text("Friends")
+            }
+            .frame(width: 70, height: 80)
+            .onTapGesture {
+                factor = "Friends"
+            }
+                VStack {
+                Circle()
+                    .foregroundColor(.green)
+                    Text("Home")
+                }
+                .frame(width: 70, height: 80)
+                .onTapGesture {
+                    factor = "Home"
+                }
+                VStack {
+                Circle()
+                    .foregroundColor(.blue)
+                    Text("Work")
+                }
+                .frame(width: 70, height: 80)
+                .onTapGesture {
+                    factor = "Work"
+                }
+                VStack {
+                Circle()
+                    .foregroundColor(.red)
+                    Text("Pet")
+                }
+                .frame(width: 70, height: 80)
+                .onTapGesture {
+                    factor = "Pet"
+                }
+        }
+            Text ("Add your factor")
+                .font(.system(size: 16.0, weight: .medium))
+                .foregroundColor(.black)
+            TextField("Factor's name", text: $factor)
+            Text ("Describe your mood")
+                .font(.system(size: 16.0, weight: .medium))
+                .foregroundColor(.black)
+            TextField("DescribeMood", text: $describeMood)
+            HStack {
+            Text ("Save")
+                .onTapGesture {
+                    dataControler.addMood(date: Date.now, factor: factor, rating: Int(amount), describe: describeMood)
+                }
+                Text ("Delete")
+                    .onTapGesture {
+                        dataControler.deleteAllMood()
+                    }
+            }
+            VStack {
+                if dataControler.moods != [] {
+                ForEach(dataControler.moods) {item in
+                    HStack {
+                        Text(item.date, format: .dateTime.day().month().year().hour().minute())
+                    Text (item.factor)
+                        Text ("\(item.rating)")
+                        Text (item.describeMood ?? "")
+                    }
+                }
+                }
+            }
+        }
+        .padding(.bottom, 80)
         }
         }
     }
-}
+
 
 struct MoodSlider: View {
     
@@ -182,19 +260,7 @@ extension Comparable {
         return self < min ? min : (max < self ? max : self)
     }
 }
-struct PinCircleView: View {
-    let position: Int
-    @Binding var pin: [Int]
-    
-    var body: some View {
-        Circle ()
-            .frame(width: 8)
-            .foregroundColor(position < self.pin.count ? .white: .gray)
-            .padding(3)
-            .background(Circle()
-                            .stroke(Color.white, lineWidth: 1.5))
-    }
-}
+
 struct TickMarkView: View {
     let mood: String
 

@@ -8,8 +8,12 @@
 import Foundation
 import RealmSwift
 
-class Task: Object, ObjectKeyIdentifiable {
+class Mood: Object, ObjectKeyIdentifiable {
     @Persisted(primaryKey: true) var id: ObjectId // This is our primary key, and each Task instance can be uniquely identified by the ID
-    @Persisted var title = ""
+    @Persisted var date:Date = Date.now
+    @Persisted var factor:String = ""
+    @Persisted var rating:Int = 0
+    @Persisted var describeMood:String? = nil
     @Persisted var completed = false
+    
 }

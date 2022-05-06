@@ -23,12 +23,12 @@ protocol LocationChangedProtocol: AnyObject {
 
 class DataController:ObservableObject {
     private(set) var localRealm: Realm?
-    @Published var tasks: [Task] = []
+    @Published var moods: [Mood] = []
 
     // On initialize of the class, we'll open a Realm and get the tasks saved in the Realm
     init() {
         openRealm()
-        getTasks()
+        getMoods()
     }
 
     // Function to open a Realm (like a box) - needed for saving data inside of the Realm
@@ -48,20 +48,20 @@ class DataController:ObservableObject {
     }
 
     // Function to add a task
-    func addTask(taskTitle: String) {
+    func addMood(date: Date, factor: String, rating: Int, describe:String) {
         if let localRealm = localRealm { // Need to unwrap optional, since localRealm is optional
             do {
                 // Trying to write to the localRealm
                 try localRealm.write {
                     // Creating a new Task
-                    let newTask = Task(value: ["title": taskTitle, "completed": false])
+                    let newMood = Mood(value: ["date": date, "factor": factor, "rating": rating, "describeMood": describe])
                    
                     // Adding newTask to localRealm
-                    localRealm.add(newTask)
+                    localRealm.add(newMood)
                     
                     // Re-setting the tasks array
-                    getTasks()
-                    print("Added new task to Realm!", newTask)
+                    getMoods()
+                    print("Added new task to Realm!", newMood)
                 }
             } catch {
                 print("Error adding task to Realm: \(error)")
@@ -70,40 +70,40 @@ class DataController:ObservableObject {
     }
     
     // Function to get all tasks from Realm and setting them in the tasks array
-    func getTasks() {
+    func getMoods() {
         if let localRealm = localRealm {
             
             // Getting all objects from localRealm and sorting them by completed state
-            let allTasks = localRealm.objects(Task.self).sorted(byKeyPath: "completed")
+            let allMoods = localRealm.objects(Mood.self).sorted(byKeyPath: "completed")
             
             // Resetting the tasks array
-            tasks = []
+            moods = []
             
             // Append each task to the tasks array
-            allTasks.forEach { task in
-                tasks.append(task)
+            allMoods.forEach { task in
+                moods.append(task)
             }
         }
     }
 
     // Function to update a task's completed state
-    func updateTask(id: ObjectId, completed: Bool) {
+    func updateMood(id: ObjectId, completed: Bool) {
         if let localRealm = localRealm {
             do {
                 // Find the task we want to update by its id
-                let taskToUpdate = localRealm.objects(Task.self).filter(NSPredicate(format: "id == %@", id))
+                let moodToUpdate = localRealm.objects(Mood.self).filter(NSPredicate(format: "id == %@", id))
                 
                 // Make sure we found the task and taskToUpdate array isn't empty
-                guard !taskToUpdate.isEmpty else { return }
+                guard !moodToUpdate.isEmpty else { return }
 
                 // Trying to write to the localRealm
                 try localRealm.write {
                     
                     // Getting the first item of the array and changing its completed state
-                    taskToUpdate[0].completed = completed
+                    moodToUpdate[0].completed = completed
                     
                     // Re-setting the tasks array
-                    getTasks()
+                    getMoods()
                     print("Updated task with id \(id)! Completed status: \(completed)")
                 }
             } catch {
@@ -117,23 +117,47 @@ class DataController:ObservableObject {
         if let localRealm = localRealm {
             do {
                 // Find the task we want to delete by its id
-                let taskToDelete = localRealm.objects(Task.self).filter(NSPredicate(format: "id == %@", id))
+                let moodToDelete = localRealm.objects(Mood.self).filter(NSPredicate(format: "id == %@", id))
                 
                 // Make sure we found the task and taskToDelete array isn't empty
-                guard !taskToDelete.isEmpty else { return }
+                guard !moodToDelete.isEmpty else { return }
                 
                 // Trying to write to the localRealm
                 try localRealm.write {
                     
                     // Deleting the task
-                    localRealm.delete(taskToDelete)
+                    localRealm.delete(moodToDelete)
                     
                     // Re-setting the tasks array
-                    getTasks()
+                    getMoods()
                     print("Deleted task with id \(id)")
                 }
             } catch {
                 print("Error deleting task \(id) to Realm: \(error)")
+            }
+        }
+    }
+    func deleteAllMood() {
+        if let localRealm = localRealm {
+            do {
+                // Find the task we want to delete by its id
+                let moodToDelete = localRealm.objects(Mood.self)
+                
+                // Make sure we found the task and taskToDelete array isn't empty
+                guard !moodToDelete.isEmpty else { return }
+                
+                // Trying to write to the localRealm
+                try localRealm.write {
+                    
+                    // Deleting the task
+                    localRealm.delete(moodToDelete)
+                    
+                    // Re-setting the tasks array
+                    getMoods()
+                    
+                }
+            } catch {
+                print("Error deleting moods to Realm: \(error)")
             }
         }
     }
