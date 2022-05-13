@@ -24,7 +24,7 @@
 		9565CCA227A4271B004C4547 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9565CCA127A4271B004C4547 /* CalendarView.swift */; };
 		9565CCA427A42729004C4547 /* StatisticView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9565CCA327A42729004C4547 /* StatisticView.swift */; };
 		9565CCA627A43737004C4547 /* Mood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9565CCA527A43737004C4547 /* Mood.swift */; };
-		CEE83D092825109300EFC0C9 /* Factors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE83D082825109300EFC0C9 /* Factors.swift */; };
+		CE6767292826627000C4609B /* Factors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6767282826627000C4609B /* Factors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,7 +44,7 @@
 		9565CCA127A4271B004C4547 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		9565CCA327A42729004C4547 /* StatisticView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticView.swift; sourceTree = "<group>"; };
 		9565CCA527A43737004C4547 /* Mood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mood.swift; sourceTree = "<group>"; };
-		CEE83D082825109300EFC0C9 /* Factors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factors.swift; sourceTree = "<group>"; };
+		CE6767282826627000C4609B /* Factors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +84,7 @@
 				9565CC8127A401AB004C4547 /* ContentView.swift */,
 				9565CC9927A424AE004C4547 /* DataController.swift */,
 				9565CCA527A43737004C4547 /* Mood.swift */,
+				CE6767282826627000C4609B /* Factors.swift */,
 				9565CC8327A401AB004C4547 /* Assets.xcassets */,
 				9565CC8527A401AB004C4547 /* Preview Content */,
 			);
@@ -104,7 +105,6 @@
 				9565CC9327A421F0004C4547 /* Animation.swift */,
 				9565CC9727A422A7004C4547 /* GeneralView.swift */,
 				9565CC9527A4222E004C4547 /* MoodView.swift */,
-				CEE83D082825109300EFC0C9 /* Factors.swift */,
 				9565CC9F27A4270D004C4547 /* NoticeView.swift */,
 				9565CCA127A4271B004C4547 /* CalendarView.swift */,
 				9565CCA327A42729004C4547 /* StatisticView.swift */,
@@ -202,10 +202,10 @@
 				953090E5281EB6DE009758B3 /* MenuView.swift in Sources */,
 				9565CC9E27A4268B004C4547 /* BottomNavigationButtons.swift in Sources */,
 				9565CCA227A4271B004C4547 /* CalendarView.swift in Sources */,
-				CEE83D092825109300EFC0C9 /* Factors.swift in Sources */,
 				9565CC8027A401AB004C4547 /* MoodProjectApp.swift in Sources */,
 				9565CC9827A422A7004C4547 /* GeneralView.swift in Sources */,
 				9565CC9627A4222E004C4547 /* MoodView.swift in Sources */,
+				CE6767292826627000C4609B /* Factors.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

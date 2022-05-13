@@ -11,11 +11,15 @@ struct MoodView: View {
     @EnvironmentObject var dataControler: DataController
     @Binding var displayMode: GeneralDisplayMode
     @Binding var colorScheme: ColorScheme
+    @State var factors = Factors()
     @State var date: Date? = nil
     @State var factor: String = ""
+    @State var factorMood: String = ""
+    @State var factorImage: String = ""
     @State var amount: CGFloat = 0.0
     @State var score: Int = 0
     @State var describeMood: String = ""
+    @State var checkmark:Bool = false
     
     var intProxy: Binding<Double>{
         Binding<Double>(get: {
@@ -45,58 +49,106 @@ struct MoodView: View {
                 Text ("What influenced your mood?")
                     .font(.system(size: 16.0, weight: .medium))
                     .foregroundColor(.black)
-            }
-            HStack {
-            VStack {
+                    .onTapGesture {
+                        dataControler.addFactor(name: "Friends", image: "factor1")
+                    }
+                
+                VStack {
+            ForEach (dataControler.factors, id: \.self) { item in
                
-            Circle()
-                .foregroundColor(.purple)
-                Text("Friends")
+                FactorView(factor: item)
+                    
             }
-            .frame(width: 70, height: 80)
-            .onTapGesture {
-                factor = "Friends"
-            }
-                VStack {
-                Circle()
-                    .foregroundColor(.green)
-                    Text("Home")
                 }
-                .frame(width: 70, height: 80)
-                .onTapGesture {
-                    factor = "Home"
-                }
-                VStack {
-                Circle()
-                    .foregroundColor(.blue)
-                    Text("Work")
-                }
-                .frame(width: 70, height: 80)
-                .onTapGesture {
-                    factor = "Work"
-                }
-                VStack {
-                Circle()
-                    .foregroundColor(.red)
-                    Text("Pet")
-                }
-                .frame(width: 70, height: 80)
-                .onTapGesture {
-                    factor = "Pet"
-                }
-        }
+//            HStack {
+//            VStack {
+//
+//            Circle()
+//                .foregroundColor(.purple)
+//                Text("Friends")
+//            }
+//            .frame(width: 70, height: 80)
+//            .onTapGesture {
+//                factor = "Friends"
+//            }
+//                VStack {
+//                Circle()
+//                    .foregroundColor(.green)
+//                    Text("Home")
+//                }
+//                .frame(width: 70, height: 80)
+//                .onTapGesture {
+//                    factor = "Home"
+//                }
+//                VStack {
+//                Circle()
+//                    .foregroundColor(.blue)
+//                    Text("Work")
+//                }
+//                .frame(width: 70, height: 80)
+//                .onTapGesture {
+//                    factor = "Work"
+//                }
+//                VStack {
+//                Circle()
+//                    .foregroundColor(.red)
+//                    Text("Pet")
+//                }
+//                .frame(width: 70, height: 80)
+//                .onTapGesture {
+//                    factor = "Pet"
+//                }
+//        }
+                    HStack {
+            VStack {
             Text ("Add your factor")
                 .font(.system(size: 16.0, weight: .medium))
                 .foregroundColor(.black)
-            TextField("Factor's name", text: $factor)
+                
+                HStack {
+                   ForEach(dataControler.factorImageArray(), id: \.self) { item in
+                       ZStack {
+                        Image(item)
+                           .resizable()
+                           .aspectRatio(contentMode: .fill)
+                           .frame(width: 30, height: 30)
+                           .onTapGesture {
+                               checkmark.toggle()
+                               factorImage = item
+                           }
+                           Image(systemName: "checkmark.circle")
+                               .frame(width: 30, height: 30)
+                               .foregroundColor(.white)
+                               .opacity(checkmark ? 0.5 : 0)
+                       }
+                   }
+                }
+                TextField("Factor's name", text: $factor)
+            
+            }
+                        VStack {
+              Image(systemName: "plus.app")
+                    .frame(width: 30, height: 30)
+                    .onTapGesture {
+                        dataControler.addFactor(name: factor, image: factorImage)
+                    }
+                            Image(systemName: "plus.app")
+                                  .frame(width: 30, height: 30)
+                                  .onTapGesture {
+                                      dataControler.deleteAllFactors()
+                                  }
+            }
+                    }
+            
             Text ("Describe your mood")
                 .font(.system(size: 16.0, weight: .medium))
                 .foregroundColor(.black)
             TextField("DescribeMood", text: $describeMood)
+            
             HStack {
             Text ("Save")
                 .onTapGesture {
-                    dataControler.addMood(date: Date.now, factor: factor, rating: Int(amount), describe: describeMood)
+                    dataControler.addMood(date: Date.now, factor: dataControler.selectedFactor?.name ?? "", rating: Int(amount), describe: describeMood)
                 }
                 Text ("Delete")
                     .onTapGesture {
@@ -114,6 +166,7 @@ struct MoodView: View {
                     }
                 }
                 }
+            }
             }
         }
         .padding(.bottom, 80)
@@ -279,6 +332,37 @@ struct TickMarkView: View {
         .frame(width: 60)
     }
 }
+
+struct FactorView: View {
+    @EnvironmentObject var dataControler: DataController
+    var factor: Factors
+    @State var checkmark:Bool = false
+    
+
+    var body: some View {
+        ZStack {
+        VStack {
+            Image(factor.image ?? "")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 30, height: 30)
+
+            Text(factor.name)
+        }
+        .frame(width: 70, height: 80)
+        .onTapGesture {
+            dataControler.selectedFactor = factor
+            checkmark.toggle()
+        }
+            Image(systemName: "checkmark.circle")
+                .frame(width: 30, height: 30)
+                .foregroundColor(.white)
+                .opacity(checkmark ? 0.5 : 0)
+    }
+    }
+    
+}
+
 struct MoodView_Previews: PreviewProvider {
     static var previews: some View {
         MoodView(displayMode: .constant(.mood), colorScheme: .constant(.blue), amount: 0)

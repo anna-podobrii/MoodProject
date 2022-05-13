@@ -24,11 +24,13 @@ protocol LocationChangedProtocol: AnyObject {
 class DataController:ObservableObject {
     private(set) var localRealm: Realm?
     @Published var moods: [Mood] = []
+    @Published var factors: [Factors] = []
 
     // On initialize of the class, we'll open a Realm and get the tasks saved in the Realm
     init() {
         openRealm()
         getMoods()
+        getFactors()
     }
 
     // Function to open a Realm (like a box) - needed for saving data inside of the Realm
@@ -162,4 +164,107 @@ class DataController:ObservableObject {
         }
     }
     
+    func factorImageArray() -> [String] {
+        var image:String = ""
+        var imagesArray:[String] = []
+        for i in 1...5 {
+             image = "factor\(i)"
+            imagesArray.append(image)
+        }
+        return imagesArray
+    }
+    
+    func addFactor(name: String, image:String) {
+        if let localRealm = localRealm { // Need to unwrap optional, since localRealm is optional
+            do {
+                // Trying to write to the localRealm
+                try localRealm.write {
+                    // Creating a new Task
+                    let newFactor = Factors(value: ["name": name, "image": image])
+                   
+                    // Adding newTask to localRealm
+                    localRealm.add(newFactor)
+                    
+                    // Re-setting the tasks array
+                    getFactors()
+                    print("Added new task to Realm!", newFactor)
+                }
+            } catch {
+                print("Error adding task to Realm: \(error)")
+            }
+        }
+    }
+    
+    func getFactors() {
+        if let localRealm = localRealm {
+            
+            // Getting all objects from localRealm and sorting them by completed state
+            let allFactors = localRealm.objects(Factors.self).sorted(byKeyPath: "name")
+            
+            // Resetting the tasks array
+            factors = []
+            
+            // Append each task to the tasks array
+            allFactors.forEach { factor in
+               factors.append(factor)
+            }
+        }
+    }
+    
+    func deleteAllFactors() {
+        if let localRealm = localRealm {
+            do {
+                // Find the task we want to delete by its id
+                let factorToDelete = localRealm.objects(Factors.self)
+                
+                // Make sure we found the task and taskToDelete array isn't empty
+                guard !factorToDelete.isEmpty else { return }
+                
+                // Trying to write to the localRealm
+                try localRealm.write {
+                    
+                    // Deleting the task
+                    localRealm.delete(factorToDelete)
+                    
+                    // Re-setting the tasks array
+                    getFactors()
+                    
+                }
+            } catch {
+                print("Error deleting factors to Realm: \(error)")
+            }
+        }
+    }
+    var isLocalRealm: Bool = false
+    var notificationToken: NotificationToken? = nil
+    
+    func factors(withFactorsId factorId: ObjectId) -> Factors? {
+        if let factors = self.localRealm?.objects(Factors.self).filter(NSPredicate(format: "id == %@", factorId)), let factor = factors.first {
+            return factor
+        }
+        return nil
+    }
+  
+    func setSelected(factors: Factors?) {
+        guard let factorIdToSelect = factors?.id else {
+            notificationToken?.invalidate()
+            return
+        }
+        let activityToSelect = self.factors(withFactorsId: factorIdToSelect)
+        selectedFactor = activityToSelect
+    }
+    
+    @Published var selectedFactor: Factors? = nil {
+        didSet {
+            if !isLocalRealm {
+                notificationToken?.invalidate()
+                notificationToken = selectedFactor?.observe({ [weak self] (change) in
+                    DispatchQueue.main.async {
+                        self?.setSelected(factors: self?.selectedFactor)
+                    }
+                })
+            }
+        }
+    }
+
 }
