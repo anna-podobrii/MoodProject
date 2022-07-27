@@ -88,7 +88,7 @@ struct GeneralView: View {
                 MoodView(displayMode: $displayMode, colorScheme: $colorScheme).environmentObject(dataController)
                     .transition(.circular)
             case .notation:
-                NoticeView(displayMode: $displayMode).environmentObject(dataController)
+                NoticeView(displayMode: $displayMode, colorScheme: $colorScheme).environmentObject(dataController)
                     .transition(.circular)
             case .calendar:
                 CalendarView(displayMode: $displayMode).environmentObject(dataController)
