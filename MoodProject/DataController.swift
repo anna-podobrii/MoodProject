@@ -328,5 +328,5 @@ class DataController:ObservableObject {
         }
     }
     
-
+    @Published var selectedDate:Date = Date()
 }
