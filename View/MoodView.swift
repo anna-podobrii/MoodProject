@@ -20,6 +20,11 @@ struct MoodView: View {
     @State var score: Int = 0
     @State var describeMood: String = ""
     @State var checkmark:Bool = false
+    let data = (1...100).map { "Item \($0)" }
+
+        let columns = [
+            GridItem(.adaptive(minimum: 80))
+        ]
     
     var intProxy: Binding<Double>{
         Binding<Double>(get: {
@@ -46,20 +51,23 @@ struct MoodView: View {
                 .foregroundColor(.black)
             VStack{
                 MoodSlider(value: $amount , range: 1.0...5.0)
+                    .padding(.bottom, 10.0)
+                Spacer()
                 Text ("What influenced your mood?")
                     .font(.system(size: 16.0, weight: .medium))
                     .foregroundColor(.black)
                     .onTapGesture {
                         dataControler.addFactor(name: "Friends", image: "factor1")
                     }
-                
-                VStack {
+                ScrollView {
+                    LazyVGrid(columns: columns, spacing: 0) {
             ForEach (dataControler.factors, id: \.self) { item in
                
                 FactorView(factor: item)
-                    
             }
                 }
+                }
+                .frame(width: 300, height: 150)
 //            HStack {
 //            VStack {
 //
@@ -136,7 +144,11 @@ struct MoodView: View {
                                   .frame(width: 30, height: 30)
                                   .onTapGesture {
                                       dataControler.deleteAllFactors()
+                                      dataControler.popularFactors()
                                   }
+//                                  .onAppear{
+//                                      dataControler.getFactors()
+//                                  }
             }
                     }
             

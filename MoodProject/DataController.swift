@@ -29,6 +29,9 @@ class DataController:ObservableObject {
     // On initialize of the class, we'll open a Realm and get the tasks saved in the Realm
     init() {
         openRealm()
+//        if isSyncingRealm == false {
+        popularFactors()
+//        }
         getMoods()
         getFactors()
     }
@@ -44,10 +47,14 @@ class DataController:ObservableObject {
 
             // Trying to open a Realm and saving it into the localRealm variable
             localRealm = try Realm()
+          
+            print(Realm.Configuration.defaultConfiguration)
         } catch {
             print("Error opening Realm", error)
         }
     }
+    @Published var isSyncingRealm: Bool = false
+   
 
     // Function to add a task
     func addMood(date: Date, factor: String, rating: Int, describe:String) {
@@ -205,15 +212,16 @@ class DataController:ObservableObject {
             factors = []
             
             // Append each task to the tasks array
-            allFactors.forEach { factor in
-               factors.append(factor)
+            allFactors.forEach { item in
+               factors.append(item)
             }
         }
     }
     
     func deleteAllFactors() {
-        if let localRealm = localRealm {
+       
             do {
+                let localRealm = try Realm()
                 // Find the task we want to delete by its id
                 let factorToDelete = localRealm.objects(Factors.self)
                 
@@ -227,14 +235,67 @@ class DataController:ObservableObject {
                     localRealm.delete(factorToDelete)
                     
                     // Re-setting the tasks array
-                    getFactors()
-                    
+                   
                 }
             } catch {
                 print("Error deleting factors to Realm: \(error)")
             }
+        
+    }
+    
+    func deleteFactor(id: ObjectId) {
+        if let localRealm = localRealm {
+            do {
+                // Find the task we want to delete by its id
+                let factorToDelete = localRealm.objects(Factors.self).filter(NSPredicate(format: "id == %@", id))
+                
+                // Make sure we found the task and taskToDelete array isn't empty
+                guard !factorToDelete.isEmpty else { return }
+                
+                // Trying to write to the localRealm
+                try localRealm.write {
+                    
+                    // Deleting the task
+                    localRealm.delete(factorToDelete)
+                    
+                    // Re-setting the tasks array
+                    getFactors()
+                    print("Deleted task with id \(id)")
+                }
+            } catch {
+                print("Error deleting task \(id) to Realm: \(error)")
+            }
         }
     }
+    
+    func popularFactors() {
+        lazy var factors: Results<Factors> = { self.localRealm?.objects(Factors.self) }()!
+        
+        if let localRealm = localRealm {
+            // 1
+            if factors.count == 0 {
+         try! localRealm.write() { // 2
+     
+             let stateFactors = ["Home":"factor1", "Friends":"factor2", "Pets":"factor3", "Work":"factor4", "Parents":"factor5"]
+//                                 Factors(value: ["name": "Friends", "image": "factor2"]),
+//                                 Factors(value: ["name": "Pets", "image": "factor3"]),
+//                                 Factors(value: ["name": "Work", "image": "factor4"]),
+//                                 Factors(value: ["name": "Parents", "image": "factor5"])] // 3
+             
+          for (key, element) in stateFactors { // 4
+            let newFactor = Factors()
+              newFactor.name = key
+              newFactor.image = element
+              localRealm.add(newFactor)
+          }
+        }
+      }
+            isSyncingRealm = true
+            factors = localRealm.objects(Factors.self)
+            print("factors count\(factors.count)")
+        }
+    }
+    
     var isLocalRealm: Bool = false
     var notificationToken: NotificationToken? = nil
     
@@ -266,5 +327,6 @@ class DataController:ObservableObject {
             }
         }
     }
+    
 
 }
